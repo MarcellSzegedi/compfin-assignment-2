@@ -1,0 +1,14 @@
+[project]
+name = "data-mining"
+version = "0.1.0"
+description = "Implementation of the Assignment I. for Data Mining course (2025) at VU."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "matplotlib>=3.10.1",
+    "pre-commit>=4.2.0",
+    "pytest>=8.3.5",
+    "seaborn>=0.13.2",
+    "skfolio>=0.9.0",
+    "yfinance>=0.2.55",
+]
