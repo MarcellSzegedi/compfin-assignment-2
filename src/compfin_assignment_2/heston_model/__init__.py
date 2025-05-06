@@ -1,1 +1,1 @@
-"""__init__.py file in the Heston model."""
+"""Heston model __init__.py file."""
