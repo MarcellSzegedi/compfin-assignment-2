@@ -12,10 +12,11 @@ dependencies = [
     "ruff>=0.11.8",
     "scipy>=1.15.2",
     "tqdm>=4.67.1",
+    "typer>=0.15.3",
 ]
 
 [project.scripts]
-compfin-assignment-2 = "compfin_assignment_2:main"
+compfin = "compfin_assignment_2.cli:app"
 
 [build-system]
 requires = ["hatchling"]
