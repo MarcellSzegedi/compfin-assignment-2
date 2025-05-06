@@ -1,6 +1,8 @@
 """Collection of numerical methods for solving Heston model."""
 
-from .euler_scheme import EulerScheme
+from functools import partial
 
-euler_sim = EulerScheme.heston_model_simulation
+from .numerical_schemes import NumScheme
 
+euler_sim = partial(NumScheme.heston_model_simulation, num_scheme="euler")
+milstein_sim = partial(NumScheme.heston_model_simulation, num_scheme="milstein")

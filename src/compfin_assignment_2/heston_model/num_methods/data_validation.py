@@ -2,16 +2,18 @@
 
 from typing import Optional
 
+
 def validate_heston_input(
-        s_0: float,
-        v_0: float,
-        t_end: float,
-        kappa: float,
-        theta: float,
-        vol_of_vol: float,
-        stoc_inc_corr: float,
-        step_size: Optional[float] = None,
-        num_steps: Optional[int] = None
+    s_0: float,
+    v_0: float,
+    t_end: float,
+    kappa: float,
+    theta: float,
+    vol_of_vol: float,
+    stoc_inc_corr: float,
+    num_scheme: str,
+    step_size: Optional[float] = None,
+    num_steps: Optional[int] = None,
 ) -> None:
     """Validate the input data for Heston model."""
     if step_size is None and num_steps is None:
@@ -36,3 +38,5 @@ def validate_heston_input(
         raise ValueError("vol_of_vol should be non-negative.")
     if stoc_inc_corr < -1 or stoc_inc_corr > 1:
         raise ValueError("stoc_inc_corr should be in [-1, 1].")
+    if num_scheme not in ["euler", "milstein"]:
+        raise ValueError("num_scheme should be either 'euler' or 'milstein'.")
