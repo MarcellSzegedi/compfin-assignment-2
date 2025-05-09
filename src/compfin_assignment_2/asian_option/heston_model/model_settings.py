@@ -18,16 +18,16 @@ class HestonModelSettings(BaseModel):
         vol_of_vol (float): The volatility of volatility.
         stoc_inc_corr (float): The correlation between the stochastic increments of the underlying
                                 asset and the volatility process.
-        strike_price (float): The strike price of the option.
         risk_free_rate (float): The risk-free interest rate.
         n_trajectories (int): The number of trajectories to simulate.
         alpha (float): Significance level.
+        strike (float): The strike price of the option.
         step_size (Optional[float]): The step size for the Euler scheme. Must be > 0.
         num_steps (Optional[int]): The number of steps for the Euler scheme. Must be > 0.
 
     """
 
-    s_0: float = Field(..., ge=0)
+    s_0: float = Field(..., gt=0)
     v_0: float = Field(..., ge=0)
     t_end: float = Field(..., ge=0)
     drift: float = Field(..., ge=0)
@@ -35,7 +35,7 @@ class HestonModelSettings(BaseModel):
     theta: float = Field(..., ge=0)
     vol_of_vol: float = Field(..., ge=0)
     stoc_inc_corr: float = Field(..., ge=-1, le=1)
-    strike_price: float = Field(..., gt=0)
+    strike: float = Field(..., gt=0)
     risk_free_rate: float = Field(..., ge=0)
     n_trajectories: int = Field(..., ge=1)
     alpha: float = Field(..., gt=0, lt=1)

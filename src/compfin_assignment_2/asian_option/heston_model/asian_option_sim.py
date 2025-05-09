@@ -21,28 +21,37 @@ class AsianOptionSim:
         self.num_scheme = None
 
     @classmethod
-    def estimate_longitudinal_avg_prices(
-        cls,
-        config: HestonModelSettings,
-        numerical_scheme: str,
+    def estimate_asian_option_price(
+        cls, config: HestonModelSettings, numerical_scheme: str
     ) -> tuple[float, float, float, float]:
-        """Estimates the asian call option price under the Heston model.
+        """Estimates the price of an asian call option under the Heston model.
 
         Args:
             config: Configuration of the model.
-            numerical_scheme: Numerical scheme used for price trajectory simulation.
+            numerical_scheme: Numerical scheme used for underlying asset trajectory simulation.
 
         Returns:
-            Price estimation, confidence interval bounds, and standard error of the estimation.
+            Point estimation, confidence interval bounds and standard error of the asian option
+            price.
         """
-        asian_pricing = cls(config)
-        asian_pricing.set_numerical_scheme(numerical_scheme)
+        asian_option_sim = cls(config)
+        asian_option_sim.set_numerical_scheme(numerical_scheme)
 
-        average_prices = asian_pricing.calculate_longitudinal_avg_prices()
-        conf_int_u, conf_int_l, std_err = asian_pricing.compute_conf_interval_long_avg_price(
-            average_prices
+        asian_payoffs = asian_option_sim.simulate_asian_payoffs()
+        discounted_asian_payoffs = asian_payoffs * np.exp(
+            -asian_option_sim.config.risk_free_rate * asian_option_sim.config.t_end
         )
-        return float(np.mean(average_prices)), conf_int_u, conf_int_l, std_err
+        conf_int_u, conf_int_l, std_err = asian_option_sim.compute_conf_interval_long_avg_price(
+            discounted_asian_payoffs
+        )
+
+        return float(np.mean(discounted_asian_payoffs)), conf_int_u, conf_int_l, std_err
+
+    def simulate_asian_payoffs(self) -> npt.NDArray[np.float64]:
+        """Simulates asian call option payoffs under the Heston model."""
+        sim_result = self.num_scheme(self.config)
+        avg_prices = np.mean(sim_result, axis=0)
+        return np.maximum(avg_prices - self.config.strike, 0)
 
     def set_numerical_scheme(self, numerical_scheme: str) -> None:
         """Sets the numerical scheme used for price trajectory simulation."""
@@ -54,18 +63,13 @@ class AsianOptionSim:
             case _:
                 raise ValueError("Invalid numerical scheme.")
 
-    def calculate_longitudinal_avg_prices(self) -> npt.NDArray[np.float64]:
-        """Calculates the average price of the simulated trajectories."""
-        sim_result = self.num_scheme(self.config)
-        return np.mean(sim_result, axis=0)
-
     def compute_conf_interval_long_avg_price(
         self,
-        average_prices: npt.NDArray[np.float64],
+        measurements: npt.NDArray[np.float64],
     ) -> tuple[float, float, float]:
-        """Computes the confidence interval and standard error of the longitudinal avg prices."""
-        std_err = np.std(average_prices, axis=0, ddof=1) / np.sqrt(average_prices.shape[0])
-        conf_int_u = average_prices + stats.norm.ppf(1 - self.config.alpha / 2) * std_err
-        conf_int_l = average_prices - stats.norm.ppf(1 - self.config.alpha / 2) * std_err
+        """Computes the confidence interval and standard error of the given measurements."""
+        std_err = np.std(measurements, axis=0, ddof=1) / np.sqrt(measurements.shape[0])
+        conf_int_u = np.mean(measurements) + stats.norm.ppf(1 - self.config.alpha / 2) * std_err
+        conf_int_l = np.mean(measurements) - stats.norm.ppf(1 - self.config.alpha / 2) * std_err
 
         return conf_int_u, conf_int_l, std_err
