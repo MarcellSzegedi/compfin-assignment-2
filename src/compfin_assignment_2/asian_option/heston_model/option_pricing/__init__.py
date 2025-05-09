@@ -1,0 +1,7 @@
+"""Option pricing module."""
+
+from .option_pricing_analytic import OptionPricingAnalytical
+from .option_pricing_sim import OptionPricingSim
+
+vanilla_option_payoff_analytical = OptionPricingAnalytical.vanilla_call_option_payoff_computation
+vanilla_option_payoff_sim = OptionPricingSim.vanilla_call_option_payoff_computation

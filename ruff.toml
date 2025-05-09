@@ -3,8 +3,8 @@
 # In case a certain rule needs to be ignored for a whole file the following comment
 # can be added to the first line (LOC 1): '# ruff: noqa: {code}'
 
-# Set the maximum line length to 120.
-line-length = 120
+# Set the maximum line length to 99.
+line-length = 99
 
 [lint]
 # Add the `line-too-long` rule to the enforced rule set. By default, Ruff omits rules that
