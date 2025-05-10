@@ -13,7 +13,7 @@ from compfin_assignment_2.asian_option.heston_model import (
     asian_option_payoff_euler_sim,
     asian_option_payoff_milstein_sim,
 )
-from compfin_assignment_2.asian_option.heston_model.model_settings import HestonModelSettings
+from compfin_assignment_2.asian_option.model_settings import HestonModelSettings
 
 app = typer.Typer()
 

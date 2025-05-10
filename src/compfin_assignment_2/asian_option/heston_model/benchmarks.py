@@ -4,12 +4,12 @@ import numpy as np
 import numpy.typing as npt
 from tqdm import tqdm
 
-from compfin_assignment_2.asian_option.heston_model.model_settings import HestonModelSettings
 from compfin_assignment_2.asian_option.heston_model.numerical_method import euler_sim, milstein_sim
 from compfin_assignment_2.asian_option.heston_model.option_pricing import (
     vanilla_option_payoff_analytical,
     vanilla_option_payoff_sim,
 )
+from compfin_assignment_2.asian_option.model_settings import HestonModelSettings
 from compfin_assignment_2.utils.commons import generate_stochastic_increments
 
 

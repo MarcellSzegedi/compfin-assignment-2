@@ -7,7 +7,7 @@ import numpy as np
 import numpy.typing as npt
 from tqdm import trange
 
-from compfin_assignment_2.asian_option.heston_model.model_settings import HestonModelSettings
+from compfin_assignment_2.asian_option.model_settings import HestonModelSettings
 
 
 class NumScheme:
