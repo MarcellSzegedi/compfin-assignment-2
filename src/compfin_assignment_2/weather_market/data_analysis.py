@@ -49,12 +49,12 @@ def exploratory_analysis():
     )
 
     plt.title(
-        "Daily Average Temperature Amsterdam with rolling mean ± rolling variation",
-        fontsize=14,
+        "Daily average temperature Amsterdam with rolling mean ± rolling variation",
+        fontsize=16,
     )
-    plt.xlabel("Date", fontsize=12)
-    plt.ylabel("Temperature (°C)", fontsize=12)
-    plt.grid(True, linestyle="--", alpha=0.4)
+
+    plt.xlabel("Date", fontsize=16)
+    plt.ylabel("Temperature (°C)", fontsize=16)
     plt.legend()
     plt.tight_layout()
     plt.savefig("results/time_series.png", dpi=400, bbox_inches="tight")
@@ -78,7 +78,7 @@ def decompose_analysis():
     # Plots the decomposition with build-in plot from statsmodels
     fig = decompose_result.plot()
     fig.set_size_inches(10, 8)
-    fig.suptitle("Decomposition of daily average Temperature in Amsterdam", fontsize=14)
+    fig.suptitle("Decomposition of daily average temperature in Amsterdam", fontsize=16)
     fig.tight_layout()
     fig.savefig("results/time_series_decomposed.png", dpi=400, bbox_inches="tight")
 
@@ -102,17 +102,15 @@ def residuals():
     # The histogram plot of the residuals
     plt.figure(figsize=(8, 6))
     plt.hist(residuals, bins=60)
-    plt.title("Residual Distribution")
+    plt.title("Residual distribution", fontsize=16)
     plt.xlabel("Residual")
     plt.ylabel("Frequency")
-    plt.grid(True)
     plt.savefig("results/residuals_histogram.png", dpi=400, bbox_inches="tight")
 
     # The Q–Q plot of the residuals
     plt.figure(figsize=(8, 6))
     stats.probplot(residuals, dist="norm", plot=plt)
-    plt.title("Q-Q plot of residuals")
-    plt.grid(True)
+    plt.title("Q-Q plot of residuals", fontsize=16)
     plt.tight_layout()
     plt.savefig("results/residuals_qq_plot.png", dpi=400)
 
@@ -136,8 +134,8 @@ def correlation(lags):
     # The ACF plot of the residuals
     plt.figure(figsize=(10, 4))
     plot_acf(residuals, lags=lags)
-    plt.title("Autocorrelation function (ACF) of residuals")
-    plt.grid(True)
+    plt.title("Autocorrelation function (ACF) of residuals", fontsize=16)
+    # plt.grid(True)
     plt.tight_layout()
     plt.savefig("results/residuals_acf.png", dpi=400)
 
@@ -146,8 +144,8 @@ def correlation(lags):
     plot_pacf(
         residuals, lags=lags, method="ywm"
     )  # 'ywm' = Yule-Walker Modified (stable method recommend for pacf)
-    plt.title("Partial autocorrelation function (PACF) of residuals")
-    plt.grid(True)
+    plt.title("Partial autocorrelation function (PACF) of residuals", fontsize=16)
+    # plt.grid(True)
     plt.tight_layout()
     plt.savefig("results/residuals_pacf.png", dpi=400)
 

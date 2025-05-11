@@ -151,10 +151,9 @@ def fourier_plot(daily_dataframe, I=2, J=2):
         t_days, sigma_values, label=r"$\hat{\sigma}(t)$ (Fourier fit)", linewidth=2
     )
 
-    plt.title("Estimated Seasonal Volatility $\sigma(t)$ via Fourier Series")
-    plt.xlabel("Day of Year")
-    plt.ylabel("Volatility")
-    plt.grid(True)
+    plt.title("Estimated seasonal volatility $\sigma(t)$ using Fourier series", fontsize=16)
+    plt.xlabel("Day of Year", fontsize=14)
+    plt.ylabel("Volatility", fontsize=14)
     plt.legend()
     plt.tight_layout()
     plt.savefig("results/fourier_analysis.png", dpi=400, bbox_inches="tight")

@@ -70,16 +70,15 @@ def plot_paths():
     mean_path = np.mean(all_paths, axis=0)
     t = np.arange(nr_days)
 
-    plt.figure(figsize=(12, 6))
+    plt.figure(figsize=(10, 4))
     for i in range(nr_paths):
         plt.plot(t, all_paths[i], label=f"Path {i+1}")
 
     plt.plot(t, mean_path, color="black", linewidth=2, label="Mean Path")
-    plt.title("Simulated Temperature Paths with Seasonal Trend")
-    plt.xlabel("Day")
-    plt.ylabel("Temperature")
+    plt.title("Simulated temperature paths with seasonal trend", fontsize=16)
+    plt.xlabel("Day", fontsize=14)
+    plt.ylabel("Temperature", fontsize=14)
     plt.legend()
-    plt.grid(True)
     plt.savefig("results/temperature_paths.png", dpi=400, bbox_inches="tight")
 
 
@@ -143,12 +142,11 @@ def payoff_histogram():
 
     payoffs = [call_cap(alpha, strike_K, T, cap) for T in temperature_paths]
 
-    plt.figure(figsize=(8, 5))
+    plt.figure(figsize=(10, 4))
     plt.hist(payoffs, bins=50, edgecolor="black")
-    plt.title(f"Histogram of HDD Call Payoffs (K = {strike_K})")
-    plt.xlabel("Payoff")
-    plt.ylabel("Frequency")
-    plt.grid(True)
+    plt.title(f"Histogram of HDD call payoffs (K = {strike_K}", fontsize=16)
+    plt.xlabel("Payoff", fontsize=14)
+    plt.ylabel("Frequency", fontsize=14)
     plt.savefig("results/hdd_call_histogram.png", dpi=300, bbox_inches="tight")
 
 
@@ -196,15 +194,14 @@ def payoff_comparison():
         put_prices.append(discount * np.mean(put_payoffs))
         collar_prices.append(discount * np.mean(collar_payoffs))
 
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(10, 4))
     plt.plot(strikes, call_prices, label="Call with Cap")
     plt.plot(strikes, put_prices, label="Put with Floor")
     plt.plot(strikes, collar_prices, label="Collar")
-    plt.title("Option Prices vs Strike")
-    plt.xlabel("Strike (K)")
-    plt.ylabel("Price")
+    plt.title("Option prices vs strike", fontsize=16)
+    plt.xlabel("Strike (K)", fontsize=14)
+    plt.ylabel("Price", fontsize=14)
     plt.legend()
-    plt.grid(True)
     plt.savefig("results/payoff_comparison.png", dpi=400, bbox_inches="tight")
 
 
