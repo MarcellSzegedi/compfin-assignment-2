@@ -1,7 +1,14 @@
 """Option pricing module."""
 
-from .option_pricing_analytic import OptionPricingAnalytical
-from .option_pricing_sim import OptionPricingSim
+from .analytic import OptionPricingAnalytical
+from .control_variates import OptionPricingControlVariates
+from .regular_sim import OptionPricingSim
 
 vanilla_option_payoff_analytical = OptionPricingAnalytical.vanilla_call_option_payoff_computation
 vanilla_option_payoff_sim = OptionPricingSim.vanilla_call_option_payoff_computation
+cont_est_var_vs_gbm_vol = OptionPricingControlVariates.compute_control_variate_estimator_variance
+diff_control_vs_heston_stat = (
+    OptionPricingControlVariates.compute_differences_between_reg_and_control_variate_methods
+)
+control_var_option_pricing = OptionPricingControlVariates.asian_option_pricing
+cont_var_coefficient_comp = OptionPricingControlVariates.compute_cont_var_estimator_variance
