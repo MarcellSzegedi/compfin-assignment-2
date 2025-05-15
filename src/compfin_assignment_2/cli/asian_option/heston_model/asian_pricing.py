@@ -13,7 +13,7 @@ from compfin_assignment_2.asian_option.heston_model import (
     asian_option_payoff_euler_sim,
     asian_option_payoff_milstein_sim,
 )
-from compfin_assignment_2.asian_option.heston_model.model_settings import HestonModelSettings
+from compfin_assignment_2.asian_option.model_settings import HestonModelSettings
 
 app = typer.Typer()
 
@@ -35,11 +35,11 @@ def asian_option_pricing(
         "theta": 0.1,
         "vol_of_vol": 0.15,
         "stoc_inc_corr": -0.7,
-        "num_steps": 1000,
+        "num_steps": 10000,
         "risk_free_rate": 0.02,
         "alpha": 0.05,
     }
-    strike_prices = np.array([1, 20, 40, 60, 80, 100, 120, 140])
+    strike_prices = np.array([1, 20, 40, 60, 80, 100, 120])
 
     price_est = defaultdict(lambda: defaultdict(float))
     price_ubound = defaultdict(lambda: defaultdict(float))

@@ -7,7 +7,7 @@ import numpy as np
 import numpy.typing as npt
 from tqdm import trange
 
-from compfin_assignment_2.asian_option.heston_model.model_settings import HestonModelSettings
+from compfin_assignment_2.asian_option.model_settings import HestonModelSettings
 
 
 class NumScheme:
@@ -38,6 +38,31 @@ class NumScheme:
         """Simulate trajectories of the Heston model using the chosen numerical scheme."""
         model_sim = cls(config, stochastic_increments)
         model_sim.set_numerical_scheme(numerical_scheme)
+
+        iterator = (
+            trange(
+                model_sim.config.n_trajectories,
+                desc=f"{numerical_scheme.upper()} scheme simulation",
+            )
+            if logging
+            else range(model_sim.config.n_trajectories)
+        )
+
+        return np.array([model_sim.simulate_trajectory(traj_idx) for traj_idx in iterator])
+
+    @classmethod
+    def gbm_model_simulation(
+        cls,
+        config: HestonModelSettings,
+        numerical_scheme: str = "euler",
+        stochastic_increments: Optional[npt.NDArray[np.float64]] = None,
+        logging: bool = False,
+    ) -> npt.NDArray[np.float64]:
+        """Simulate trajectories of the GBM model using the chosen numerical scheme."""
+        model_sim = cls(config, stochastic_increments)
+        model_sim.set_numerical_scheme(numerical_scheme)
+
+        model_sim._reducing_heston_to_gbm()
 
         iterator = (
             trange(
@@ -140,3 +165,9 @@ class NumScheme:
             ),
         )
         return next_s, next_v
+
+    def _reducing_heston_to_gbm(self) -> None:
+        """Reduces the Heston model to the GBM model by changing the parameters.."""
+        self.config.kappa = 0
+        self.config.v_0 = self.config.theta
+        self.config.vol_of_vol = 0
